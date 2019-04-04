@@ -78,6 +78,23 @@ class Tree(object):
             print(root.item, "-> ", end="")
             return
 
+    def is_post_order(self, list, start, end):
+        """判断一个数组是否是二元查找树后序遍历的序列"""
+        root = list[end]
+        if list[start:end] == [] or len(list[start:end+1]) < 3:
+            return True
+        for i in list[start:end]:
+            if i > root:
+                split = list.index(i)
+                break
+        self.is_post_order(list, start, split-1)
+        self.is_post_order(list, split, end-1)
+        if min(list[split: end]) >= root:
+            return True
+        else:
+            # print("False")
+            return False
+
 
 if __name__ == '__main__':
     tree = Tree()
@@ -94,3 +111,4 @@ if __name__ == '__main__':
     print("")
     tree.post_order(tree.root)
     print("")
+    print(tree.is_post_order([1, 3, 2, 5, 7, 6, 4], 0, 6))
